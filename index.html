@@ -14,6 +14,11 @@
             height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
+            padding: 20px;
+        }
+        #contexto {
+            text-align: center;
+            margin-bottom: 20px;
         }
         #ruleta {
             width: 300px;
@@ -50,23 +55,69 @@
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+    <div id="contexto">
+        <h1>🎉 ¡GRAN SORTEO DE AÑO NUEVO! 🎯</h1>
+        <h2>🎡 GIRA LA RULETA Y GANA PREMIOS INCREÍBLES</h2>
+        <p>💫 <strong>PREMIOS GARANTIZADOS:</strong></p>
+        <p>🏆 5 Licencias extra GRATIS.<br>
+           💸 70% de descuento en tu próxima licencia.<br>
+           🏅 2 Licencias extra GRATIS.<br>
+           💰 50% de descuento en tu próxima licencia.<br>
+           🎖 1 Licencia extra GRATIS.<br>
+           🔖 20% de descuento en tu próxima licencia.</p>
+        <p>💡 <strong>¡ASOMBROSO!</strong></p>
+        <p>Los premios ganados son totalmente tuyos. ¡Decide cómo aprovecharlos al máximo!<br>
+           ✔ Úsalos para ampliar tu equipo de ventas.<br>
+           🎁 Regálalos a amigos, familiares o clientes especiales.<br>
+           💸 Véndelos para recuperar tu inversión o ganar un extra.</p>
+        <hr>
+        <p>✨ <strong>¿CÓMO PARTICIPAR?</strong></p>
+        <p>📥 <strong>Si eres NUEVO cliente:</strong><br>
+           - Compra la app en PREVENTA por solo $99 MXN (válido hasta el 7 de enero).<br>
+           - Envíanos tu ticket o comprobante de pago por WhatsApp: 2283548435<br>
+           * Dale Like a nuestra página en Facebook: <a href="https://www.facebook.com/appPapelitoNotasDeVenta">Papelito Notas de Venta</a><br>
+           - Envía una captura de pantalla del Like por WhatsApp: 2283548435</p>
+        <p>👥 <strong>Si ya eres CLIENTE:</strong><br>
+           - Dale Like a nuestra página en Facebook: <a href="https://www.facebook.com/appPapelitoNotasDeVenta">Papelito Notas de Venta</a><br>
+           - Envía una captura de pantalla del Like por WhatsApp: 2283548435</p>
+        <hr>
+        <p>🎡 <strong>¡GIRA UNA VEZ Y GANA SEGURO AQUÍ!:</strong><br>
+           👉 <a href="https://adalsmdev.github.io/ruletaPapelitoDigital/">https://adalsmdev.github.io/ruletaPapelitoDigital/</a></p>
+        <p>📤 <strong>Reclama tu premio:</strong><br>
+           - Envía una captura de tu premio a nuestro WhatsApp: 2283548435<br>
+           - Publícalo en nuestro grupo exclusivo: <a href="https://chat.whatsapp.com/BiVBxk5SKdULoXZeDpoVbS">https://chat.whatsapp.com/BiVBxk5SKdULoXZeDpoVbS</a></p>
+        <p>⚠️ <strong>Premio válido solo si has seguido todos los pasos.</strong></p>
+        <hr>
+        <p>📱 <strong>DISPONIBILIDAD DE LAS APPS:</strong><br>
+           ✅ Windows: Disponible a partir del 25 de enero de 2025.<br>
+           📱 Próximamente: iOS, Android y Mac.<br>
+           🚀 ¡No dejes pasar esta oportunidad y gana grandes premios!</p>
+        <p>⚠️ <strong>Vigencia de la ruleta: Hasta el 21 de enero de 2025.</strong></p>
+    </div>
     <div id="ruleta"></div>
     <button id="boton">Girar Ruleta</button>
     <div id="resultado"></div>
 
     <script>
-        const premios = ["1 Licencia Gratis", "50% de Descuento", "10% de Descuento", "2 Licencias Gratis", "Gracias por participar"];
-        const colores = ["#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6"];
+        const premios = [
+            "🏆 5 Licencias extra GRATIS",
+            "💸 70% de descuento en tu próxima licencia",
+            "🏅 2 Licencias extra GRATIS",
+            "💰 50% de descuento en tu próxima licencia",
+            "🎖 1 Licencia extra GRATIS",
+            "🔖 20% de descuento en tu próxima licencia"
+        ];
+        const colores = ["#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6", "#8E44AD"];
 
         const ruleta = document.getElementById('ruleta');
         const boton = document.getElementById('boton');
         const resultado = document.getElementById('resultado');
-        
-        // Dibujar sectores de la ruleta
+
         const numSectores = premios.length;
         const anguloSector = 360 / numSectores;
 
@@ -78,31 +129,29 @@
             ruleta.appendChild(sector);
         });
 
-        // Verificar si la ruleta ya ha sido girada
         const girada = localStorage.getItem('ruletaGirada');
 
         if (girada) {
-            boton.disabled = true; // Desactiva el botón si ya ha sido girada
+            boton.disabled = true;
             boton.textContent = "Solo una vuelta permitida";
         }
 
-        // Girar la ruleta
         boton.addEventListener('click', () => {
-            if (localStorage.getItem('ruletaGirada')) return; // Verificar nuevamente para evitar giros adicionales
+            if (localStorage.getItem('ruletaGirada')) return;
 
-            const giro = Math.floor(Math.random() * 360) + 360 * 3; // Giro aleatorio
+            const giro = Math.floor(Math.random() * 360) + 360 * 3;
             ruleta.style.transition = 'transform 4s ease-out';
             ruleta.style.transform = `rotate(${giro}deg)`;
 
-            boton.disabled = true; // Desactiva el botón
-            boton.textContent = "Girar la Ruleta..."; // Cambia el texto del botón mientras gira
+            boton.disabled = true;
+            boton.textContent = "Girar la Ruleta...";
 
             setTimeout(() => {
                 const anguloFinal = giro % 360;
                 const indicePremio = Math.floor((360 - anguloFinal) / anguloSector) % numSectores;
-                resultado.textContent = `¡Felicidades! Obtuviste: ${premios[indicePremio]}`;
-                boton.textContent = "Solo una vuelta permitida"; // Cambia el texto del botón cuando termine
-                localStorage.setItem('ruletaGirada', 'true'); // Marca la ruleta como girada en localStorage
+                resultado.innerHTML = `¡Felicidades! Obtuviste: ${premios[indicePremio]}`;
+                boton.textContent = "Solo una vuelta permitida";
+                localStorage.setItem('ruletaGirada', 'true');
             }, 4000);
         });
     </script>
