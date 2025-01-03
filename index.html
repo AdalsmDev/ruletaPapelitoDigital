@@ -22,6 +22,7 @@
             border: 5px solid #333;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         .sector {
             width: 50%;
@@ -31,6 +32,14 @@
             top: 50%;
             left: 50%;
             transform-origin: 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .sector img {
+            width: 50px;
+            height: 50px;
         }
         #boton {
             margin-top: 20px;
@@ -41,6 +50,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
         #boton:disabled {
             background-color: #aaa;
@@ -60,6 +70,7 @@
 
     <script>
         const premios = ["1 Licencia Gratis", "50% de Descuento", "10% de Descuento", "2 Licencias Gratis", "Gracias por participar"];
+        const imagenes = ["licencia.png", "descuento50.png", "descuento10.png", "2licencias.png", "gracias.png"]; // Asegúrate de subir estas imágenes al mismo directorio
         const colores = ["#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6"];
 
         const ruleta = document.getElementById('ruleta');
@@ -75,6 +86,11 @@
             sector.classList.add('sector');
             sector.style.transform = `rotate(${i * anguloSector}deg) skewY(-60deg)`;
             sector.style.backgroundColor = colores[i % colores.length];
+            
+            const img = document.createElement('img');
+            img.src = imagenes[i];
+            sector.appendChild(img);
+
             ruleta.appendChild(sector);
         });
 
