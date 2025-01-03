@@ -78,27 +78,31 @@
             ruleta.appendChild(sector);
         });
 
-        // Girar la ruleta
-        let girada = false;
+        // Verificar si la ruleta ya ha sido girada
+        const girada = localStorage.getItem('ruletaGirada');
 
-        boton.addEventListener('click', () => {
-            if (girada) return; // No permite girar más de una vez
-
-            const giro = Math.floor(Math.random() * 360) + 360 * 3; // Giro aleatorio
-            ruleta.style.transition = 'transform 4s ease-out';
-            ruleta.style.transform = `rotate(${giro}deg)`;
-
-            boton.disabled = true; // Desactiva el botón
-            boton.textContent = "Girar la Ruleta..."; // Cambia el texto del botón mientras gira
-
-            setTimeout(() => {
-                const anguloFinal = giro % 360;
-                const indicePremio = Math.floor((360 - anguloFinal) / anguloSector) % numSectores;
-                resultado.textContent = `¡Felicidades! Obtuviste: ${premios[indicePremio]}`;
-                boton.textContent = "Solo una vuelta permitida"; // Cambia el texto del botón cuando termine
-                girada = true; // Marca la ruleta como girada
-            }, 4000);
-        });
+        if (girada) {
+            boton.disabled = true; // Desactiva el botón si ya ha sido girada
+            boton.textContent = "Solo una vuelta permitida";
+        } else {
+            // Girar la ruleta
+            boton.addEventListener('click', () => {
+                const giro = Math.floor(Math.random() * 360) + 360 * 3; // Giro aleatorio
+                ruleta.style.transition = 'transform 4s ease-out';
+                ruleta.style.transform = `rotate(${giro}deg)`;
+    
+                boton.disabled = true; // Desactiva el botón
+                boton.textContent = "Girar la Ruleta..."; // Cambia el texto del botón mientras gira
+    
+                setTimeout(() => {
+                    const anguloFinal = giro % 360;
+                    const indicePremio = Math.floor((360 - anguloFinal) / anguloSector) % numSectores;
+                    resultado.textContent = `¡Felicidades! Obtuviste: ${premios[indicePremio]}`;
+                    boton.textContent = "Solo una vuelta permitida"; // Cambia el texto del botón cuando termine
+                    localStorage.setItem('ruletaGirada', 'true'); // Marca la ruleta como girada en localStorage
+                }, 4000);
+            });
+        }
     </script>
 </body>
 </html>
