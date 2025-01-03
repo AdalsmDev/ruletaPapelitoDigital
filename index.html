@@ -1,162 +1,373 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruleta de Premios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
+            background: linear-gradient(135deg, #f0f4f8, #ffffff);
+            color: #333;
+            line-height: 1.6;
         }
-        #contexto {
+
+        h1 {
+            color: #FF5733;
             text-align: center;
-            margin-bottom: 20px;
-            max-width: 600px;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
         }
-        #ruleta {
-            width: 300px;
-            height: 300px;
+
+        h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .contenedor-principal {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .ruleta-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+        }
+
+        .ruleta {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border: 5px solid #333;
+            border: 5px solid #555;
             position: relative;
             overflow: hidden;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
         }
+
         .sector {
-            width: 50%;
-            height: 50%;
-            background-color: transparent;
             position: absolute;
-            top: 50%;
+            width: 50%;
+            height: 100%;
+            top: 0;
             left: 50%;
-            transform-origin: 0 0;
+            transform-origin: 0 50%;
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
         }
-        #boton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
+
+        .premios {
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .premios h3 {
+            margin-top: 0;
+            font-size: 1.6em;
+            text-align: center;
+            color: #FF5733;
+        }
+
+        .premios ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .premios li {
+            margin: 10px 0;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .girar-btn {
+            display: block;
+            background: linear-gradient(90deg, #FF5733, #FFC300);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.2em;
             cursor: pointer;
-        }
-        #boton:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
-        }
-        #resultado {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
             text-align: center;
+            margin: 20px auto 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .girar-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .girar-btn:disabled {
+            background: #cccccc;
+        }
+
+        #mensaje-decorado {
+            text-align: center;
+            font-size: 1.4em;
+            color: #FF5733;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        #resultado {
+            text-align: center;
+            font-size: 1em;
+            margin-top: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .columnas-container {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .columna {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .columna h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .columna ul {
+            list-style: disc inside;
+        }
+
+        .reclama-premio h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: black;
+            /* Letras negras */
+            text-shadow: none;
+            margin-bottom: 15px;
+        }
+
+        .reclama-premio ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: black;
+            /* Letras negras */
+            font-size: 1.1em;
+        }
+
+        .reclama-premio ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reclama-premio ul li strong {
+            color: black;
+            /* Letras negras */
+            font-weight: bold;
+        }
+
+        .reclama-premio ul li a {
+            color: white;
+            /* Enlaces blancos */
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .reclama-premio div {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: black;
+            /* Letras negras */
         }
     </style>
 </head>
-<body>
-    <div id="contexto">
-        <h1>🎉 ¡GRAN SORTEO DE AÑO NUEVO! 🎯</h1>
-        <h2>🎡 GIRA LA RULETA Y GANA PREMIOS INCREÍBLES</h2>
-        <p>💫 <strong>PREMIOS GARANTIZADOS:</strong></p>
-        <ul style="list-style-type: none; padding: 0;">
-            <li>🏆 5 Licencias extra GRATIS.</li>
-            <li>💸 70% de descuento en tu próxima licencia.</li>
-            <li>🏅 2 Licencias extra GRATIS.</li>
-            <li>💰 50% de descuento en tu próxima licencia.</li>
-            <li>🎖 1 Licencia extra GRATIS.</li>
-            <li>🔖 20% de descuento en tu próxima licencia.</li>
-        </ul>
-        <p>💡 <strong>¡ASOMBROSO!</strong></p>
-        <p>Los premios ganados son totalmente tuyos. ¡Decide cómo aprovecharlos al máximo!<br>
-           ✔ Úsalos para ampliar tu equipo de ventas.<br>
-           🎁 Regálalos a amigos, familiares o clientes especiales.<br>
-           💸 Véndelos para recuperar tu inversión o ganar un extra.</p>
-        <hr>
-        <p>✨ <strong>¿CÓMO PARTICIPAR?</strong></p>
-        <p>📥 <strong>Si eres NUEVO cliente:</strong><br>
-           - Compra la app en PREVENTA por solo $99 MXN (válido hasta el 7 de enero).<br>
-           - Envíanos tu ticket o comprobante de pago por WhatsApp: 2283548435<br>
-           - Dale Like a nuestra página en Facebook: <a href="https://www.facebook.com/appPapelitoNotasDeVenta">Papelito Notas de Venta</a><br>
-           - Envía una captura de pantalla del Like por WhatsApp: 2283548435</p>
-        <p>👥 <strong>Si ya eres CLIENTE:</strong><br>
-           - Dale Like a nuestra página en Facebook: <a href="https://www.facebook.com/appPapelitoNotasDeVenta">Papelito Notas de Venta</a><br>
-           - Envía una captura de pantalla del Like por WhatsApp: 2283548435</p>
-        <hr>
-        <p>🎡 <strong>¡GIRA UNA VEZ Y GANA SEGURO AQUÍ!:</strong><br>
-           👉 <a href="https://adalsmdev.github.io/ruletaPapelitoDigital/">https://adalsmdev.github.io/ruletaPapelitoDigital/</a></p>
-        <p>📤 <strong>Reclama tu premio:</strong><br>
-           - Envía una captura de tu premio a nuestro WhatsApp: 2283548435<br>
-           - Publícalo en nuestro grupo exclusivo: <a href="https://chat.whatsapp.com/BiVBxk5SKdULoXZeDpoVbS">https://chat.whatsapp.com/BiVBxk5SKdULoXZeDpoVbS</a></p>
-        <p>⚠️ <strong>Premio válido solo si has seguido todos los pasos.</strong></p>
-        <hr>
-        <p>📱 <strong>DISPONIBILIDAD DE LAS APPS:</strong><br>
-           ✅ Windows: Disponible a partir del 25 de enero de 2025.<br>
-           📱 Próximamente: iOS, Android y Mac.<br>
-           🚀 ¡No dejes pasar esta oportunidad y gana grandes premios!</p>
-        <p>⚠️ <strong>Vigencia de la ruleta: Hasta el 21 de enero de 2025.</strong></p>
-    </div>
-    <div id="ruleta"></div>
-    <button id="boton">Girar Ruleta</button>
-    <div id="resultado"></div>
 
+<body>
+    <h1>🎉 ¡GRAN SORTEO DE AÑO NUEVO! 🎯</h1>
+    <h2>🎡 GIRA LA RULETA Y GANA PREMIOS INCREÍBLES</h2>
+
+    <div class="contenedor-principal">
+        <div class="ruleta-container">
+            <div class="ruleta" id="ruleta"></div>
+        </div>
+
+        <div class="premios">
+            <h3>🎮 PREMIOS GARANTIZADOS:</h3>
+            <ul>
+                <li>🏆 5 Licencias extra GRATIS</li>
+                <li>💸 70% de descuento en tu próxima licencia</li>
+                <li>🏅 2 Licencias extra GRATIS</li>
+                <li>💰 50% de descuento en tu próxima licencia</li>
+                <li>🎖 1 Licencia extra GRATIS</li>
+                <li>🔖 20% de descuento en tu próxima licencia</li>
+            </ul>
+        </div>
+    </div>
+
+    <center>
+        <div id="mensaje-decorado">🎡 ¡GIRA UNA VEZ Y GANA!</div>
+        <button class="girar-btn" id="boton">Girar Ruleta</button>
+        <div id="resultado"></div>
+    </center>
+
+    <div class="columnas-container">
+        <div class="columna">
+            <h3>✨ ¿CÓMO PARTICIPAR?</h3>
+            <p>📥 <strong>Si eres NUEVO cliente:</strong></p>
+            <ul>
+                <li>Compra la app en PREVENTA por solo $99 MXN (válido hasta el 7 de enero).</li>
+                <li>Envíanos tu ticket o comprobante de pago por WhatsApp: 2283548435</li>
+                <li>Dale Like a nuestra página en Facebook: <a
+                        href="https://www.facebook.com/appPapelitoNotasDeVenta">Papelito Notas de Venta</a></li>
+            </ul>
+        </div>
+
+        <div class="columna">
+            <h3>📱 DISPONIBILIDAD DE LAS APPS:</h3>
+            <ul>
+                <li>✅ Windows: Disponible a partir del 25 de enero de 2025.</li>
+                <li>📱 Próximamente: iOS, Android y Mac.</li>
+            </ul>
+        </div>
+    </div>
     <script>
         const premios = [
-            "🏆 5 Licencias extra GRATIS",
-            "💸 70% de descuento en tu próxima licencia",
-            "🏅 2 Licencias extra GRATIS",
-            "💰 50% de descuento en tu próxima licencia",
-            "🎖 1 Licencia extra GRATIS",
-            "🔖 20% de descuento en tu próxima licencia"
+            { texto: "🏆 5 Licencias extra GRATIS", color: "#FF4500" },
+            { texto: "💸 70% de descuento en tu próxima licencia", color: "#32CD32" },
+            { texto: "🏅 2 Licencias extra GRATIS", color: "#4169E1" },
+            { texto: "💰 50% de descuento en tu próxima licencia", color: "#FFD700" },
+            { texto: "🎖 1 Licencia extra GRATIS", color: "#9370DB" },
+            { texto: "🔖 20% de descuento en tu próxima licencia", color: "#8B008B" },
         ];
-        const colores = ["#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6", "#8E44AD"];
 
-        const ruleta = document.getElementById('ruleta');
-        const boton = document.getElementById('boton');
-        const resultado = document.getElementById('resultado');
+        const ruleta = document.getElementById("ruleta");
+        const boton = document.getElementById("boton");
+        const resultado = document.getElementById("resultado");
 
-        const numSectores = premios.length;
-        const anguloSector = 360 / numSectores;
-
+        // Dibujar sectores
         premios.forEach((premio, i) => {
-            const sector = document.createElement('div');
-            sector.classList.add('sector');
-            sector.style.transform = `rotate(${i * anguloSector}deg) skewY(-60deg)`;
-            sector.style.backgroundColor = colores[i % colores.length];
+            const sector = document.createElement("div");
+            sector.className = "sector";
+            sector.style.backgroundColor = premio.color;
+            sector.style.transform = `rotate(${i * (360 / premios.length)}deg) skewY(60deg)`;
             ruleta.appendChild(sector);
         });
 
-        const girada = localStorage.getItem('ruletaGirada');
+        boton.addEventListener("click", () => {
+            const giros = 5;
+            const grados = giros * 360 + Math.floor(Math.random() * 360);
 
-        if (girada) {
-            boton.disabled = true;
-            boton.textContent = "Solo una vuelta permitida";
-        }
-
-        boton.addEventListener('click', () => {
-            if (localStorage.getItem('ruletaGirada')) return;
-
-            const giro = Math.floor(Math.random() * 360) + 360 * 3;
-            ruleta.style.transition = 'transform 4s ease-out';
-            ruleta.style.transform = `rotate(${giro}deg)`;
+            ruleta.style.transition = `transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)`;
+            ruleta.style.transform = `rotate(${grados}deg)`;
 
             boton.disabled = true;
-            boton.textContent = "Girar la Ruleta...";
+            boton.textContent = "Girando...";
 
             setTimeout(() => {
-                const anguloFinal = giro % 360;
-                const indicePremio = Math.floor((360 - anguloFinal) / anguloSector) % numSectores;
-                resultado.innerHTML = `¡Felicidades! Obtuviste: ${premios[indicePremio]}`;
-                boton.textContent = "Solo una vuelta permitida";
-                localStorage.setItem('ruletaGirada', 'true');
+                const gradosFinal = grados % 360;
+                const indicePremio = Math.floor((360 - gradosFinal) / (360 / premios.length)) % premios.length;
+
+                resultado.innerHTML = `
+      <div style="
+        background: linear-gradient(45deg, #FF8C00, #FFD700, #FF4500);
+        background-size: 400% 400%;
+        animation: fondoBrillante 8s infinite;
+        border-radius: 15px;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 8px 20px rgba(255, 140, 0, 0.6);
+      ">
+        <div style="font-size: 2.2em; font-weight: bold; margin-bottom: 10px;">
+          🎉 ¡Felicidades! 🎉
+        </div>
+<div style="
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fff;
+  background-color: #000; /* Fondo negro */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  display: inline-block; /* Ajustar el tamaño del fondo al texto */
+">
+  <span style="
+    background: linear-gradient(90deg, #FFD700, #FF4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+  ">
+    ${premios[indicePremio].texto}
+  </span>
+</div>
+<div class="reclama-premio">
+  <h3>🥳 ¡Qué suerte! Reclama ahora tu premio:</h3>
+  <ul>
+    <li>📤 Envía una captura de tu premio a nuestro WhatsApp: <strong>2283548435</strong></li>
+    <li>🗨️ Publícalo en nuestro grupo exclusivo: 
+      <a href="https://chat.whatsapp.com/BiVBxk5SKdULoXZeDpoVbS" 
+         style="color: white; font-weight: bold; text-decoration: underline;">
+         Grupo de WhatsApp Papelito Dinámicas
+      </a>
+    </li>
+  </ul>
+  <div style="margin-top: 15px; font-size: 0.9em; color: black;">
+    ⚠️ Premio válido solo si has seguido todos los pasos.
+  </div>
+</div>
+
+
+      `;
+
+                boton.textContent = "Gracias por participar, Solo una vuelta permitida";
             }, 4000);
         });
+
+        // Estilo de animaciones
+        const estilos = document.createElement("style");
+        estilos.innerHTML = `
+  @keyframes fondoBrillante {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+@keyframes brilloTexto {
+    0%, 100% {
+      text-shadow: 0px 0px 5px #FF4500, 0px 0px 10px #FFD700;
+    }
+    50% {
+      text-shadow: 0px 0px 20px #FFD700, 0px 0px 30px #FF8C00;
+    }
+}
+
+  `;
+        document.head.appendChild(estilos);
+
     </script>
 </body>
+
 </html>
