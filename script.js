@@ -1,15 +1,15 @@
 const wheel = document.getElementById("wheel");
-const spinBtn = document.getElementById("spin-btn");
+const spinImage = document.getElementById("spin-image"); // Seleccionamos la imagen
 const finalValue = document.getElementById("final-value");
 
 const rotationValues = [
-  { minDegree: 0, maxDegree: 51.42, value: 7, prize: "Premio 7" },
-  { minDegree: 51.43, maxDegree: 102.84, value: 6, prize: "Premio 6" },
-  { minDegree: 102.85, maxDegree: 154.26, value: 5, prize: "Premio 5" },
-  { minDegree: 154.27, maxDegree: 205.68, value: 4, prize: "Premio 4" },
-  { minDegree: 205.69, maxDegree: 257.1, value: 3, prize: "Premio 3" },
-  { minDegree: 257.11, maxDegree: 308.52, value: 2, prize: "Premio 2" },
-  { minDegree: 308.53, maxDegree: 360, value: 1, prize: "Premio 1" },
+  { minDegree: 0, maxDegree: 51.42, value: 7, prize: "🚀 1 Licencia Version MultiCaja" },
+  { minDegree: 51.43, maxDegree: 102.84, value: 6, prize: "🏅 10% descuento proxima compra" },
+  { minDegree: 102.85, maxDegree: 154.26, value: 5, prize: "💻 3 Licencias Version UniCaja" },
+  { minDegree: 154.27, maxDegree: 205.68, value: 4, prize: "🏆 50% descuento proxima compra" },
+  { minDegree: 205.69, maxDegree: 257.1, value: 3, prize: "📱 2 Licencias Version UniCaja" },
+  { minDegree: 257.11, maxDegree: 308.52, value: 2, prize: "💸 30% descuento proxima compra" },
+  { minDegree: 308.53, maxDegree: 360, value: 1, prize: "🖥️ 1 Licencia Version UniCaja" },
 ];
 
 // Tamaño de cada segmento
@@ -22,7 +22,7 @@ let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: [7, 6, 5, 4, 3, 2, 1],
+    labels: ["🚀","🏅", "💻","🏆", "📱", "💸", "🖥️"],
     datasets: [
       {
         backgroundColor: pieColors,
@@ -44,6 +44,8 @@ let myChart = new Chart(wheel, {
     },
   },
 });
+
+// Función para capturar alertas como imagen
 const captureAlert = () => {
   const swalElement = document.querySelector(".swal2-popup");
 
@@ -75,9 +77,6 @@ const captureAlert = () => {
   }, 500); // Retraso ajustado para evitar problemas
 };
 
-
-
-
 // Función para determinar el premio basado en el ángulo
 const valueGenerator = (angleValue) => {
   const adjustedAngle = (angleValue - 90) % 360; // Ajustar el ángulo por la posición de la flecha
@@ -103,7 +102,7 @@ const valueGenerator = (angleValue) => {
             .addEventListener("click", captureAlert);
         },
       });
-      spinBtn.disabled = false;
+      spinImage.style.pointerEvents = "auto"; // Reactivar clics
       return;
     }
   }
@@ -124,8 +123,8 @@ const valueGenerator = (angleValue) => {
 let baseRotation = 0;
 
 // Evento de rotación
-spinBtn.addEventListener("click", () => {
-  spinBtn.disabled = true;
+spinImage.addEventListener("click", () => {
+  spinImage.style.pointerEvents = "none"; // Deshabilita clics mientras gira
   finalValue.innerHTML = `<p>¡Girando!</p>`;
 
   let randomDegree = Math.floor(Math.random() * 360); // Ángulo aleatorio

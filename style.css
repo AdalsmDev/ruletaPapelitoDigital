@@ -69,16 +69,33 @@
     height: 100%;
     
   }
-  
+  /* 
   #wheel {
     max-height: inherit;
     width: inherit;
     top: 0;
     padding: 0;
-  }
+  } */
+
+/*   .image-wheel-container {
+    position: relative;
+    width: 300px; 
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 50%;
+  } */
   
+/*   #wheel-image {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 4s cubic-bezier(0.23, 1, 0.32, 1);
+  } */
   
-  #spin-btn {
+/*   #spin-btn {
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -99,11 +116,27 @@
     color: #fff;
   
   
-  }
+  } */
   
-  #spin-btn:hover {
-    background: #e68900;
-  }
+  /* Spin Image (centralizar en el canvas) */
+#spin-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  width: 100px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  height: 100px;
+  z-index: 2; /* Asegura que esté encima del canvas */
+}
+  
+#spin-btn:hover + #spin-image {
+  filter: brightness(1.2); /* Aumenta el brillo para que sea más visible */
+  transform: scale(1.1); /* Le da un efecto de agrandamiento */
+  transition: transform 0.2s, filter 0.2s; /* Suaviza la animación */
+}
+
+  
   
   
   @keyframes rotate {
@@ -129,7 +162,7 @@
     font-weight: 500;
   }
   
-  #final-value {
+  #final-value2 {
     margin-top: 20px;
     font-size: 0.9rem;
     color: #333;
@@ -146,4 +179,3 @@
       right: -5%;
     }
   }
-  
