@@ -1,6 +1,9 @@
 const wheel = document.getElementById("wheel");
-const spinImage = document.getElementById("spin-image"); // Seleccionamos la imagen
+const spinImage = document.getElementById("spin-image");
 const finalValue = document.getElementById("final-value");
+
+// Mensaje inicial
+finalValue.innerHTML = `Haga clic en la Ruleta<br>¡Suerte y a Ganar!`;
 
 const rotationValues = [
   { minDegree: 0, maxDegree: 51.42, value: 7, prize: "🚀 1 Licencia Version MultiCaja" },
@@ -15,14 +18,30 @@ const rotationValues = [
 // Tamaño de cada segmento
 const data = [1, 1, 1, 1, 1, 1, 1];
 // Colores de los segmentos
-var pieColors = ["#3369e8", "#009925", "#d50f25", "#EEB211"];
+const pieColors = [
+  "#4dc9f6",
+  "#f67019",
+  "#f53794",
+  "#8549ba",
+  "#166a8f",
+  "#00a950",
+  "#58595b"
+];
 
 // Crear el gráfico
 let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: ["🚀","🏅", "💻","🏆", "📱", "💸", "🖥️"],
+    labels: [
+      "🚀",
+      "🏅",
+      "💻",
+      "🏆",
+      "📱",
+      "💸",
+      "🖥️"
+    ],
     datasets: [
       {
         backgroundColor: pieColors,
@@ -31,12 +50,12 @@ let myChart = new Chart(wheel, {
     ],
   },
   options: {
-    responsive: true,
     animation: { duration: 0 },
     plugins: {
       tooltip: false,
       legend: { display: false },
       datalabels: {
+        rotation: 0,
         color: "#ffffff",
         formatter: (_, context) => context.chart.data.labels[context.dataIndex],
         font: { size: 18 },
@@ -44,38 +63,6 @@ let myChart = new Chart(wheel, {
     },
   },
 });
-
-// Función para capturar alertas como imagen
-const captureAlert = () => {
-  const swalElement = document.querySelector(".swal2-popup");
-
-  if (!swalElement) {
-    console.error("No se encontró el elemento de la alerta.");
-    return;
-  }
-
-  // Configuración de html2canvas
-  const options = {
-    backgroundColor: null, // Para mantener transparencia si es necesario
-    useCORS: true, // Para manejar imágenes de dominio cruzado
-    willReadFrequently: true, // Sugerencia para optimizar lecturas frecuentes
-    scale: 2, // Aumentar la resolución de la imagen
-  };
-
-  // Pequeño retraso para asegurar que la alerta esté completamente visible
-  setTimeout(() => {
-    html2canvas(swalElement, options)
-      .then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "resultado.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      })
-      .catch((error) => {
-        console.error("Error al capturar la alerta:", error);
-      });
-  }, 500); // Retraso ajustado para evitar problemas
-};
 
 // Función para determinar el premio basado en el ángulo
 const valueGenerator = (angleValue) => {
@@ -93,39 +80,106 @@ const valueGenerator = (angleValue) => {
   for (let i of rotationValues) {
     if (correctedAngle >= i.minDegree && correctedAngle <= i.maxDegree) {
       Swal.fire({
-        title: "¡Tenemos un ganador!",
-        html: `<strong>${i.prize}</strong><br><button class="btn btn-secondary mt-3" id="download-result">Descargar Resultado</button>`,
-        icon: "success",
-        didRender: () => {
-          document
-            .getElementById("download-result")
-            .addEventListener("click", captureAlert);
+        title: '<span style="font-size: 1.7rem;">🏆 ¡Tenemos un ganador! 🎉</span>',
+        html: `
+          <div style="background-color:rgb(248, 224, 6); 
+          border: 1px solid #dcdcdc; padding: 15px; 
+          border-radius: 5px; color: #333; font-size: 1.2rem;
+          font-weight: bold;">  ${i.prize}  </div> <!-- Subtítulo destacado -->
+
+          <p style="font-size: 0.9rem; color: #555; margin-top: 1rem;">
+            📸 ¡Toma una captura de pantalla y <br>
+            envíala 🖼️ para reclamar tu premio! 🚀
+          </p> <!-- Texto pequeño con indicación -->
+        `,
+        confirmButtonText: `
+          <i class="fa fa-thumbs-up"></i> ¡Felicidades! Gracias por participar.
+        `,
+        didOpen: () => { 
+          launchConfetti(); 
         },
+        willClose: () => {
+          stopConfetti();
+          resetState();
+        }
+      }).then(() => {
+        spinImage.style.pointerEvents = "auto"; // Reactivar clics
+        wheel.style.pointerEvents = "auto"; // Reactivar clics
       });
-      spinImage.style.pointerEvents = "auto"; // Reactivar clics
       return;
     }
   }
 
   Swal.fire({
-    title: "Resultado",
-    html: `<strong>Chart Label: ${chartLabel}</strong><br><button class="btn btn-secondary mt-3" id="download-result">Descargar Resultado</button>`,
+    title: "Resultado🖼️",
+    html: `<strong>Chart Label: ${chartLabel}</strong>`,
     icon: "info",
-    didRender: () => {
-      document
-        .getElementById("download-result")
-        .addEventListener("click", captureAlert);
-    },
+    willClose: () => {
+      stopConfetti();
+      resetState();
+    }
+  }).then(() => {
+    spinImage.style.pointerEvents = "auto"; // Reactivar clics
+    wheel.style.pointerEvents = "auto"; // Reactivar clics
   });
 };
+
+// Variable para almacenar el intervalo del confeti
+let confettiInterval;
+
+// Función para lanzar confeti
+function launchConfetti() {
+  const duration = 15 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  confettiInterval = setInterval(function() {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(confettiInterval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+
+    // since particles fall down, start a bit higher than random
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      })
+    );
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      })
+    );
+  }, 250);
+}
+
+// Función para detener el confeti
+function stopConfetti() {
+  clearInterval(confettiInterval);
+}
+
+// Función para resetear el estado
+function resetState() {
+  finalValue.innerHTML = "¿Quieres intentarlo otra vez?"; // Mensaje de reinicio
+}
 
 // Variables de animación
 let baseRotation = 0;
 
 // Evento de rotación
-spinImage.addEventListener("click", () => {
+const spinWheel = () => {
   spinImage.style.pointerEvents = "none"; // Deshabilita clics mientras gira
-  finalValue.innerHTML = `<p>¡Girando!</p>`;
+  wheel.style.pointerEvents = "none"; // Deshabilita clics mientras gira
+  finalValue.innerHTML = `<p>¡Girando...!</p>`;
 
   let randomDegree = Math.floor(Math.random() * 360); // Ángulo aleatorio
 
@@ -143,8 +197,13 @@ spinImage.addEventListener("click", () => {
 
     if (currentStep >= steps) {
       clearInterval(rotationInterval);
+      finalValue.innerHTML = `¡Felicidades, gracias por participar...!`;
       baseRotation = myChart.options.rotation % 360; // Guardar el estado final
       valueGenerator(baseRotation);
     }
   }, intervalSpeed);
-});
+};
+
+// Evento de clic tanto en la ruleta como en la imagen
+wheel.addEventListener("click", spinWheel);
+spinImage.addEventListener("click", spinWheel);

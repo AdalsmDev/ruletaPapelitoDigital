@@ -1,181 +1,239 @@
+/* Nuevos estilos para rotar los textos en los segmentos */
+.chartjs-datalabels-label {
+  transform: rotate(-60deg); /* Ajustar el ángulo según sea necesario */
+  text-align: center; /* Alinear el texto al centro */
+  transform-origin: center; /* Asegurar que la rotación se centre en el texto */
+}
 
+/* Ajustes adicionales para mantener el diseño original */
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  
-  }
-  
-  .q-body--layout-animate .q-page-container {
-      transition: padding-top .12s,padding-right .12s,padding-bottom .12s,padding-left .12s!important
-  }
-  .text-h4 {
-      font-size: 2.125rem;
-      font-weight: 400;
-      line-height: 2.5rem;
-      letter-spacing: .00735em
-  }
-  
-  
-  .q-pt-md {
-      padding-top: 16px
-  }
-  
-  
-  .q-px-md {
-      padding-left: 16px;
-      padding-right: 16px
-  }
-  
-  body {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-    
-  
-  }
-  
-  .info-box {
-    background: #fff;
-    color: #333;
-  }
-  
-  .title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .subtitle {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-  }
-  
-  .wrapper {
-    display: block;
-    background: #fff;
-    color: #333;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  
-  .container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    
-  }
-  /* 
-  #wheel {
-    max-height: inherit;
-    width: inherit;
-    top: 0;
-    padding: 0;
-  } */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
-/*   .image-wheel-container {
-    position: relative;
-    width: 300px; 
-    height: 300px;
-    margin: 0 auto;
-    border-radius: 50%;
-  } */
-  
-/*   #wheel-image {
-    width: 50%;
-    height: 50%;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: transform 4s cubic-bezier(0.23, 1, 0.32, 1);
-  } */
-  
-/*   #spin-btn {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    height: 26%;
-    width: 26%;
-    letter-spacing: 0.1em;
-  
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    background: #ff9800;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-  
-    color: #fff;
-  
-  
-  } */
-  
-  /* Spin Image (centralizar en el canvas) */
+.q-body--layout-animate .q-page-container {
+  transition: padding-top .12s, padding-right .12s, padding-bottom .12s, padding-left .12s !important;
+}
+
+.text-h4 {
+  font-size: 2.125rem;
+  font-weight: 400;
+  line-height: 2.5rem;
+  letter-spacing: .00735em;
+}
+
+.q-pt-md {
+  padding-top: 16px;
+}
+
+.q-px-md {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.info-box {
+  background: #fff;
+  color: #333;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.label2 {
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  /* margin-top: 1.5rem; */
+}
+
+/* Ajustes del texto principal */
+.text-h4 {
+  font-size: 1.8rem; /* Tamaño del texto */
+  margin: 0; /* Eliminar márgenes */
+  line-height: 1.2; /* Ajustar el espacio entre líneas */
+  text-align: left; /* Forzar alineación a la izquierda */
+}
+
+/* Ajustes del texto principal */
+.text-h3 {
+  font-size: 1.6rem; /* Tamaño del texto */
+  margin: 0; /* Eliminar márgenes */
+  line-height: 1.2; /* Ajustar el espacio entre líneas */
+  text-align: left; /* Forzar alineación a la izquierda */
+}
+
+/* Ajustes SUBTILES */
+.text-h2 {
+  font-size: 1.3rem; /* Tamaño del texto */
+  margin: 0; /* Eliminar márgenes */
+  line-height: 1.2; /* Ajustar el espacio entre líneas */
+  text-align: center; /* Forzar alineación a la izquierda */
+}
+
+.wrapper {
+  display: block;
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* #spin-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  width: 100px; 
+  height: 100px;
+  z-index: 2;
+} */
+
+/* Posicionar el botón de giro correctamente en el centro de la ruleta */
 #spin-image {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  width: 100px; /* Ajusta el tamaño de la imagen según tus necesidades */
-  height: 100px;
+  width: 80px; /* Tamaño más ajustado para buena proporción */
+  height: 80px; /* Mantener proporción */
   z-index: 2; /* Asegura que esté encima del canvas */
 }
-  
+
 #spin-btn:hover + #spin-image {
   filter: brightness(1.2); /* Aumenta el brillo para que sea más visible */
   transform: scale(1.1); /* Le da un efecto de agrandamiento */
   transition: transform 0.2s, filter 0.2s; /* Suaviza la animación */
 }
 
-  
-  
-  
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
   }
-  
-  
+}
+
+img {
+  position: absolute;
+  width: 4em;
+  top: 43%;
+  right: -5%;
+}
+
+/* #final-value {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1.5em;
+  color: #202020;
+  font-weight: 500;
+} */
+
+/* Otros ajustes menores para el texto y el diseño */
+#final-value {
+  font-size: 1.2em; /* Ajustar tamaño para que no sea demasiado grande */
+  margin-top: 1em;
+  color: #202020;
+  font-weight: 500;
+}
+
+
+#final-value2 {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    font-size: 12px;
+  }
+
   img {
-    position: absolute;
-    width: 4em;
-    top: 43%;
     right: -5%;
-  
   }
-  
-  #final-value {
-    font-size: 1.5em;
-    text-align: center;
-    margin-top: 1.5em;
-    color: #202020;
-    font-weight: 500;
+
+  #spin-image {
+    width: 60px; /* Tamaño más pequeño para dispositivos móviles */
+    height: 60px;
   }
-  
-  #final-value2 {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  
-  
-  @media screen and (max-width: 768px) {
-    .wrapper {
-      font-size: 12px;
-    }
-  
-    img {
-      right: -5%;
-    }
-  }
+}
+
+#logo-image {
+  position: relative;
+  transform: translate(-25%, 0%);
+  width: 100px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  height: auto;
+  z-index: 2; /* Asegura que esté encima del canvas */
+}
+
+/* Contenedor del título con flexbox */
+.title-container {
+  display: flex;
+  align-items: center; /* Alinear verticalmente logo y texto */
+  justify-content: flex-start; /* Alinear horizontalmente hacia la izquierda */
+  text-align: left; /* Evitar centrado no deseado */
+  gap: 10px; /* Espaciado entre el logo y el texto */
+  margin-bottom: 15px; /* Espacio extra debajo del contenedor */
+}
+
+/* Ajustes del logo */
+.title-logo {
+  width: 50px; /* Tamaño ajustado para buena proporción */
+  height: auto; /* Mantener proporciones */
+}
+
+/* Añadir esta regla al final del archivo CSS */
+#wheel {
+  cursor: pointer; /* Cambia el cursor al pasar sobre la ruleta */
+}
+
+
+.premio-container {
+  background-color: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  color: #333;
+}
+
+.label-premio {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #333;
+  text-align: left;
+}
