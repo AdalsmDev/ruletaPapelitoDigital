@@ -241,3 +241,17 @@ img {
   color: #333;
   text-align: left;
 }
+
+
+.swal2-popup {
+  font-family: 'Poppins', sans-serif; /* Asegúrate de que esté en tu fuente principal */
+}
+
+.swal2-title {
+  color: #333;
+  font-weight: bold;
+}
+
+.swal2-html-container {
+  color: #555;
+}
