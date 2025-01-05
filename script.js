@@ -3,7 +3,7 @@ const spinImage = document.getElementById("spin-image");
 const finalValue = document.getElementById("final-value");
 
 // Mensaje inicial
-finalValue.innerHTML = `Haga clic en la Ruleta<br>¡Suerte y a Ganar!`;
+finalValue.innerHTML = `Haga clic en la Ruleta...¡Suerte y a Ganar!`;
 
 const rotationValues = [
   { minDegree: 0, maxDegree: 51.42, value: 7, prize: "🚀 1 Licencia Version MultiCaja" },
@@ -179,7 +179,7 @@ let baseRotation = 0;
 const spinWheel = () => {
   spinImage.style.pointerEvents = "none"; // Deshabilita clics mientras gira
   wheel.style.pointerEvents = "none"; // Deshabilita clics mientras gira
-  finalValue.innerHTML = `<p>¡Girando...!</p>`;
+  finalValue.innerHTML = `¡Girando...!`;
 
   let randomDegree = Math.floor(Math.random() * 360); // Ángulo aleatorio
 
